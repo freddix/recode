@@ -1,7 +1,7 @@
 Summary:	Utility for converting text between multiple character sets
 Name:		recode
 Version:	3.7
-Release:	1
+Release:	2
 License:	GPL v2/LGPL
 Group:		Applications/Text
 # git://github.com/pinard/Recode.git
@@ -34,8 +34,8 @@ Header files and documentations for librecode.
 %setup -q
 
 # automake 1.12.x fixes
-sed -i -e "/AM_C_PROTOTYPES/d" configure.ac
-sed -i -e "s| ansi2knr||g" src/Makefile.am
+%{__sed} -i -e "/AM_C_PROTOTYPES/d" configure.ac
+%{__sed} -i -e "s| ansi2knr||g" src/Makefile.am
 
 %build
 %{__libtoolize}
@@ -51,6 +51,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %find_lang %{name}
 
@@ -77,6 +79,5 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
 %{_includedir}/*.h
 
